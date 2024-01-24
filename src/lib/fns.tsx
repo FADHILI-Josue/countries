@@ -2,9 +2,8 @@ import { ICountry } from "@/redux/features/countries.slice";
 import { Eselector } from "@/redux/features/selector.slice";
 
 export const filterCountriesByContinent = (countries: ICountry[], continent: Eselector): ICountry[] => {
-    console.log(countries)
     if(continent === null) return countries
-    return countries.filter((country) => country.region === 'america');
+    return countries.filter((country) => country.region === continent);
 };
 
 export const searchCountriesByName = (countries: ICountry[], searchText: string): ICountry[] => {
