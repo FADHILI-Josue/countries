@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <Providers>
       <body className={cn(
-            'min-h-screen font-sans antialiased grainy bg-slate-200 dark:bg-gray-800',
+            'min-h-screen font-sans antialiased w-full overflow-x-hidden grainy bg-slate-200 dark:bg-gray-800',
             inter.className
           )}>
         <NavBar />
