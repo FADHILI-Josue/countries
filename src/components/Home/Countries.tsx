@@ -6,7 +6,14 @@ import { AutoComplete, Input, SelectProps } from 'antd'
 import { SearchIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { SearchOutlined } from '@ant-design/icons'
 import { FC, useEffect, useState } from 'react'
+import { Select } from 'antd';
+import { Eselector, setSelector } from '@/redux/features/selector.slice'
+
+
+
+
 interface CountriesProps {
     countries: ICountry[]
 }
@@ -20,23 +27,42 @@ const searchResult = (countries: ICountry[]) =>
                 value: country.name.common,
                 label: (
                     <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                        }}
+                        className='flex items-center justify-between'
                     >
                         <span>
-                            Found {country.name.common} on{' '}
+                            {country.name.common}
                         </span>
-                        <span>100 results</span>
-                    </div>
+                        <Image
+                            alt={country.flags.alt}
+                            src={country.flags.svg}
+                            width={100}
+                            height={100}
+                            className=' h-5 w-5'
+                        />                    </div>
                 ),
             };
         });
+
+
+
 const Countries: FC<CountriesProps> = ({ countries }) => {
+    const dispatch = useAppDispatch()
+    
+    // SELECT
+const onChange = (value: Eselector) => {
+    dispatch(setSelector(value))
+};
+
+const onSearch = (value: string) => null;
+
+const filterOption = (input: string, option?: { label: string; value: string }) =>
+    (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
+// --------
+
     const [filteredCountries, setFilteredCountries] = useState<ICountry[]>([])
     const stateCountries = useAppSelector(state => state.countries);
-    const {selector} = useAppSelector(state => state.selector);
+    const { selector } = useAppSelector(state => state.selector);
     const [options, setOptions] = useState<SelectProps<object>['options']>([]);
 
     const handleSearch = (value: string) => {
@@ -47,14 +73,15 @@ const Countries: FC<CountriesProps> = ({ countries }) => {
     const onSelect = (value: string) => {
         setFilteredCountries(searchCountriesByName(stateCountries.countries, value));
     };
-    const dispatch = useAppDispatch()
-    useEffect(()=>{
+    useEffect(() => {
         console.log(countries)
         dispatch(setCountries(countries));
-        setFilteredCountries(searchCountriesByName(stateCountries.countries, ""))
+        const res = filterCountriesByContinent(stateCountries.countries, selector)
+        console.log(res)
+        setFilteredCountries(res)
     }, [countries, dispatch, selector, stateCountries])
 
-    useEffect(()=>{console.log(filteredCountries)},[filteredCountries])
+    useEffect(() => { console.log(filteredCountries) }, [filteredCountries])
     return <div className='w-full'>
         <div className="w-full mb-5 flex items-center justify-between">
             <AutoComplete
@@ -65,10 +92,20 @@ const Countries: FC<CountriesProps> = ({ countries }) => {
                 onSearch={handleSearch}
                 size="large"
             >
-                <Input 
-                // prefix={<SearchOutlined className='h-full' />}
-                 size="large" placeholder="input here" />
+                <Input
+                    prefix={<SearchOutlined className='h-full' />}
+                    size="large" placeholder="input here" className='!placeholder-black/60 !dark:placeholder-white' />
             </AutoComplete>
+            <Select
+                showSearch
+                popupMatchSelectWidth={150}
+                placeholder="Select a person"
+                optionFilterProp="children"
+                onChange={onChange}
+                onSearch={onSearch}
+                filterOption={filterOption}
+                options={["Africa", "America", "Europe", "Asia", "Oceania"].map((e) => ({value:e, label: e}))}
+            />
         </div>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
             {filteredCountries.length === 0 && <h1>no country found</h1>}

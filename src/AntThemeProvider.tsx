@@ -9,14 +9,17 @@ interface AntThemeProviderProps {
 
 const darkTheme:ThemeConfig = {
   token: {
-    colorPrimary: 'red',
+    colorPrimary: 'blue',
     colorBgBase: '#1F2937',
-    colorPrimaryHover: "#374151",
-    colorText: 'white'
+    colorText: 'white',
+    colorTextPlaceholder: '#e8ede9',
   },
   components: {
-    Dropdown: {
-      colorBgBase: 'blue',
+    Select: {
+      colorBorder: 'white'
+    },
+    Input: {
+      colorBorder: 'white'
     }
   }
 }

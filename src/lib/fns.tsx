@@ -1,7 +1,8 @@
 import { ICountry } from "@/redux/features/countries.slice";
-import { selector } from "@/redux/features/selector.slice";
+import { Eselector } from "@/redux/features/selector.slice";
 
-export const filterCountriesByContinent = (countries: ICountry[], continent: selector): ICountry[] => {
+export const filterCountriesByContinent = (countries: ICountry[], continent: Eselector): ICountry[] => {
+    if(continent === null) return countries
     return countries.filter((country) => country.region === continent);
 };
 

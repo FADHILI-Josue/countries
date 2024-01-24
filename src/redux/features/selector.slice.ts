@@ -2,16 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 
- export type selector = "Africa" | "America" | "Europe" | "Asia" | "Oceania" | null
+ export type Eselector = "Africa" | "America" | "Europe" | "Asia" | "Oceania" | null
 
-const initialState: {selector:selector} = {
+const initialState: {selector:Eselector} = {
   selector: null
 }
 export const selectorSlice = createSlice({
   name: "selector",
   initialState,
   reducers: {
-    setSelector: (state, action: {payload: selector} ) => {
+    setSelector: (state, action: {payload: Eselector} ) => {
       state.selector = action.payload;
     }
   }
