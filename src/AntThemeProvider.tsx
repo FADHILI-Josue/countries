@@ -17,7 +17,6 @@ const darkTheme:ThemeConfig = {
   components: {
     Dropdown: {
       colorBgBase: 'blue',
-      colorBgContainer: "red"
     }
   }
 }

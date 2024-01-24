@@ -1,20 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface Icountry {
-    name: string
-    image: string
-    population: number
-    region: string
-    capital: string
+export interface ICountry {
+    flags: {
+      png: string;
+      svg: string;
+      alt: string;
+    };
+    name: {
+      common: string;
+      official: string;
+      nativeName: {
+        [key: string]: {
+          official: string;
+          common: string;
+        };
+      };
+    };
+    capital: string[];
+    region: string;
+    population: number;
 }
 
-const initialState:Icountry[] = []
+const initialState:{countries:ICountry[]} = {countries:[]}
 export const coutriesSlice = createSlice({
     name: 'coutries',
     initialState,
     reducers: {
         setCountries: (state, action) => {
-          state = action.payload
+        console.log(action.payload)
+          state.countries = action.payload
         }
     }
 })

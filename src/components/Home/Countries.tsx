@@ -1,46 +1,78 @@
 "use client"
-import { Icountry, setCountries } from '@/redux/features/countries.slice'
-import { AutoComplete, Input } from 'antd'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { filterCountriesByContinent, searchCountriesByName } from '@/lib/fns'
+import { ICountry, setCountries } from '@/redux/features/countries.slice'
+import { AutoComplete, Input, SelectProps } from 'antd'
 import { SearchIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FC, useState } from 'react'
-
+import { FC, useEffect, useState } from 'react'
 interface CountriesProps {
-    countries: (Icountry & { alt: string })[]
+    countries: ICountry[]
 }
 const countriesList = ["Rwanda", "France", "England"]; // Example list of countries
 
+
+const searchResult = (countries: ICountry[]) =>
+    countries
+        .map((country, idx) => {
+            return {
+                value: country.name.common,
+                label: (
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                        }}
+                    >
+                        <span>
+                            Found {country.name.common} on{' '}
+                        </span>
+                        <span>100 results</span>
+                    </div>
+                ),
+            };
+        });
 const Countries: FC<CountriesProps> = ({ countries }) => {
-    const [value, setValue] = useState('');
+    const [filteredCountries, setFilteredCountries] = useState<ICountry[]>([])
+    const stateCountries = useAppSelector(state => state.countries);
+    const {selector} = useAppSelector(state => state.selector);
+    const [options, setOptions] = useState<SelectProps<object>['options']>([]);
 
-    const handleSearch = (searchText: string) => {
-        // Implement your own search logic here if needed
-        console.log('Search:', searchText);
+    const handleSearch = (value: string) => {
+        setFilteredCountries(searchCountriesByName(stateCountries.countries, value));
+        setOptions(value ? searchResult(filteredCountries) : []);
     };
 
-    const onSelect = (selectedValue: string) => {
-        console.log('Selected:', selectedValue);
+    const onSelect = (value: string) => {
+        setFilteredCountries(searchCountriesByName(stateCountries.countries, value));
     };
+    const dispatch = useAppDispatch()
+    useEffect(()=>{
+        console.log(countries)
+        dispatch(setCountries(countries));
+        setFilteredCountries(searchCountriesByName(stateCountries.countries, ""))
+    }, [countries, dispatch, selector, stateCountries])
+
+    useEffect(()=>{console.log(filteredCountries)},[filteredCountries])
     return <div className='w-full'>
-        <div className="w-full flex items-center justify-between">
-        <AutoComplete
-      value={value}
-      onChange={(newValue) => setValue(newValue)}
-      onSelect={onSelect}
-      onSearch={handleSearch}
-      style={{ width: 300 }}
-      options={countriesList.map((country) => ({ value: country }))}
-    >
-      <Input
-        // prefix={<SearchOutlined style={{ color: 'rgba(0, 0, 0, 0.25)' }} />}
-        placeholder="Search for a country"
-        style={{ borderRadius: '20px' }}
-      />
-    </AutoComplete>
+        <div className="w-full mb-5 flex items-center justify-between">
+            <AutoComplete
+                popupMatchSelectWidth={252}
+                style={{ width: 300 }}
+                options={options}
+                onSelect={onSelect}
+                onSearch={handleSearch}
+                size="large"
+            >
+                <Input 
+                // prefix={<SearchOutlined className='h-full' />}
+                 size="large" placeholder="input here" />
+            </AutoComplete>
         </div>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
-            {countries.map((e: any, i: number) => <Link href={`country/${e.name.common}`} key={i} className='bg-white text-slate-700 dark:bg-slate-900 rounded-lg shadow-md shadow-black/30 overflow-hidden dark:shadow-white/30 dark:text-white'>
+            {filteredCountries.length === 0 && <h1>no country found</h1>}
+            {filteredCountries.map((e: ICountry, i: number) => <Link href={`country/${e.name.common}`} key={i} className='bg-white text-slate-700 dark:bg-slate-900 rounded-lg shadow-md shadow-black/30 overflow-hidden dark:shadow-white/30 dark:text-white'>
                 <Image
                     alt={e.flags.alt}
                     src={e.flags.svg}
