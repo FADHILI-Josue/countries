@@ -27,7 +27,6 @@ export const coutriesSlice = createSlice({
     initialState,
     reducers: {
         setCountries: (state, action) => {
-        console.log(action.payload)
           state.countries = action.payload
         }
     }

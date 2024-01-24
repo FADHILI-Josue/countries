@@ -9,7 +9,7 @@ export default async function Home() {
   const results:ICountry[]  = await fetch("https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital").then(res => res.json())
   return (
     <>
-      <MaxWidthWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center">
+      <MaxWidthWrapper className="mb-12 mt-10 sm:mt-20 flex flex-col items-center justify-center text-center">
         <Countries countries={results} />
         {/* <Client /> */}
       </MaxWidthWrapper>

@@ -31,15 +31,15 @@ const page = async ({ params: { name } }: pageProps) => {
         <div className="w-full flex flex-col items-center">
               <h1 className="text-black mx-5 dark:text-white text-4xl mb-10 whitespace-normal">{country[0].name.common}</h1>
           <div className="flex flex-col sm:flex-row gap-5 w-full h-full pl-10 sm:pl-0 sm:items-center justify-around">
-            <div className="flex font-bold flex-col whitespace-nowrap text-black dark:text-white/80">
-              <p> <span className='  '>Landlocked:</span> {country[0].landlocked ? "yes" : "no"}</p>
-              <p> <span>unMember:</span> {country[0].unMember ? "yes" : "no"}</p>
-              <p> <span>Area:</span> {country[0].area}</p>
-              <p> <span>population:</span> {country[0].population}</p>
-              <p> <span>cioc:</span> {country[0].cioc}</p>
-              <p> <span>cca3:</span> {country[0].cca3}</p>
-              <p> <span>ccn3:</span> {country[0].ccn3}</p>
-              <p> <span>cca2:</span> {country[0].cca2}</p>
+            <div className="flex flex-col whitespace-nowrap">
+              <p> <span className='font-bold text-black dark:text-white/80'>Landlocked:</span> {country[0].landlocked ? "yes" : "no"}</p>
+              <p> <span className="font-bold text-black dark:text-white/80">unMember:</span> {country[0].unMember ? "yes" : "no"}</p>
+              <p> <span className="font-bold text-black dark:text-white/80">Area:</span> {country[0].area}</p>
+              <p> <span className="font-bold text-black dark:text-white/80">population:</span> {country[0].population}</p>
+              <p> <span className="font-bold text-black dark:text-white/80">cioc:</span> {country[0].cioc}</p>
+              <p> <span className="font-bold text-black dark:text-white/80">cca3:</span> {country[0].cca3}</p>
+              <p> <span className="font-bold text-black dark:text-white/80">ccn3:</span> {country[0].ccn3}</p>
+              <p> <span className="font-bold text-black dark:text-white/80">cca2:</span> {country[0].cca2}</p>
             </div>
             <div className="flex flex-col whitespace-nowrap space-y-2 text-black dark:text-white/80">
               <p> <span className='font-bold'>Top level Domains:</span> {country[0].tld[0]}</p>

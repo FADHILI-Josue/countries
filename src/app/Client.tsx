@@ -99,9 +99,6 @@ const Client: FC<ClientProps> = ({}) => {
     const { selector } = useSelector((state:RootState) => state.selector)
     const {countries} = useAppSelector(state => state.countries)
     const dispatch = useAppDispatch()
-    useEffect(()=>{
-      console.log(countries)
-    },[countries])
   return <div>
     <h1>{selector}</h1>
     <button onClick={()=>dispatch( selector? setSelector(null):setSelector('Africa'))}>hell</button>

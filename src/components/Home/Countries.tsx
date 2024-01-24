@@ -46,18 +46,18 @@ const searchResult = (countries: ICountry[]) =>
 
 const Countries: FC<CountriesProps> = ({ countries }) => {
     const dispatch = useAppDispatch()
-    
+
     // SELECT
-const onChange = (value: Eselector) => {
-    dispatch(setSelector(value))
-};
+    const onChange = (value: Eselector) => {
+        dispatch(setSelector(value))
+    };
 
-const onSearch = (value: string) => null;
+    const onSearch = (value: string) => null;
 
-const filterOption = (input: string, option?: { label: string; value: string }) =>
-    (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+    const filterOption = (input: string, option?: { label: string; value: string }) =>
+        (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
-// --------
+    // --------
 
     const [filteredCountries, setFilteredCountries] = useState<ICountry[]>([])
     const stateCountries = useAppSelector(state => state.countries);
@@ -73,19 +73,16 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
         setFilteredCountries(searchCountriesByName(stateCountries.countries, value));
     };
     useEffect(() => {
-        console.log(countries)
         dispatch(setCountries(countries));
         const res = filterCountriesByContinent(stateCountries.countries, selector)
-        console.log(res)
         setFilteredCountries(res)
     }, [countries, dispatch, selector, stateCountries])
 
-    useEffect(() => { console.log(filteredCountries) }, [filteredCountries])
     return <div className='w-full'>
-        <div className="w-full mb-5 flex items-center justify-between">
+        <div className="w-full mb-5 flex gap-2 items-center justify-between">
             <AutoComplete
                 popupMatchSelectWidth={252}
-                style={{ width: 300 }}
+                className='w-full sm:w-auto'
                 options={options}
                 onSelect={onSelect}
                 onSearch={handleSearch}
@@ -93,17 +90,19 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
             >
                 <Input
                     prefix={<SearchOutlined className='h-full' />}
-                    size="large" placeholder="Search Country Here" className='!placeholder-black/60 !dark:placeholder-white' />
+                    size="large"
+                    placeholder="Search Country Here" />
             </AutoComplete>
             <Select
                 showSearch
+                className='w-full sm:w-32'
                 popupMatchSelectWidth={150}
                 placeholder="Select a continent"
                 optionFilterProp="children"
                 onChange={onChange}
                 onSearch={onSearch}
                 filterOption={filterOption}
-                options={["Africa", "Americas", "Europe", "Asia", "Oceania", "Antarctic"].map((e) => ({value:e, label: e}))}
+                options={["Africa", "Americas", "Europe", "Asia", "Oceania", "Antarctic"].map((e) => ({ value: e, label: e }))}
             />
         </div>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
