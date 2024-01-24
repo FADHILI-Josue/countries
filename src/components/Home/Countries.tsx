@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import { filterCountriesByContinent, searchCountriesByName } from '@/lib/fns'
 import { ICountry, setCountries } from '@/redux/features/countries.slice'
 import { AutoComplete, Input, SelectProps } from 'antd'
-import { SearchIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SearchOutlined } from '@ant-design/icons'
@@ -94,17 +93,17 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
             >
                 <Input
                     prefix={<SearchOutlined className='h-full' />}
-                    size="large" placeholder="input here" className='!placeholder-black/60 !dark:placeholder-white' />
+                    size="large" placeholder="Search Country Here" className='!placeholder-black/60 !dark:placeholder-white' />
             </AutoComplete>
             <Select
                 showSearch
                 popupMatchSelectWidth={150}
-                placeholder="Select a person"
+                placeholder="Select a continent"
                 optionFilterProp="children"
                 onChange={onChange}
                 onSearch={onSearch}
                 filterOption={filterOption}
-                options={["Africa", "America", "Europe", "Asia", "Oceania"].map((e) => ({value:e, label: e}))}
+                options={["Africa", "Americas", "Europe", "Asia", "Oceania", "Antarctic"].map((e) => ({value:e, label: e}))}
             />
         </div>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>

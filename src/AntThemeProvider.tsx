@@ -16,7 +16,8 @@ const darkTheme:ThemeConfig = {
   },
   components: {
     Select: {
-      colorBorder: 'white'
+      colorBorder: 'white',
+      optionSelectedBg: '#1f2a38'
     },
     Input: {
       colorBorder: 'white'

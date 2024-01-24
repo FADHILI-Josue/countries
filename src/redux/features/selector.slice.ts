@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 
- export type Eselector = "Africa" | "America" | "Europe" | "Asia" | "Oceania" | null
+ export type Eselector = "Africa" | "Americas" | "Europe" | "Asia" | "Oceania" | "Antarctic" | null
 
 const initialState: {selector:Eselector} = {
   selector: null
