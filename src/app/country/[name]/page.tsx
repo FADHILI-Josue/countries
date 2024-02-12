@@ -45,7 +45,7 @@ const page = async ({ params: { name } }: pageProps) => {
               <p> <span className='font-bold'>Top level Domains:</span> {country[0].tld[0]}</p>
               <p> <span className='font-bold'>Top level Domains:</span> {country[0].tld[0]}</p>
               <p> <span className='font-bold'>Currencies:</span> {currencies.join(", ")}</p>
-              <p> <span className='font-bold'>Languages:</span> {country[0].capital[0]}</p>
+              <p> <span className='font-bold'>capital:</span> {country[0].capital[0]}</p>
             </div>
           </div>
           <div className="mt-auto flex items-center justify-center pt-5 flex-wrap gap-4">
